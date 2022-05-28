@@ -1,33 +1,41 @@
 <template>
   <div id="app">
-    <h1 >Wpisałeś {{email}}</h1>
-    <input type="text" v-model="email"  @keydown.enter=alertMyEmail()>
-    <button @click=alertMyEmail() >send</button>
-    <div v-if="email.length < 10">Ale masz krótki adres!</div>
-    <div v-else-if="email.length < 15">Twój adres e-mail jest w sam raz.</div>
-    <div v-else id=red >Twój adres e-mail jest stanowczo za długi.</div>
+    <h1>Witaj w systemie do zapisów na zajęcia</h1>
+    <div v-if="!loggedIn">
+      <label id="switch"
+        >Zaloguj się e-mailem
+        <input type="text" v-model="email" />
+        <button @click="logMeIn()">Wchodzę</button></label
+      >
+    </div>
+    <div v-else>
+      <h2>Witaj {{ email }}</h2>
+      <a @click="logOut()"> Wyloguj </a>
+    </div>
   </div>
 </template>
 
 <script>
-export default{
-data() {
-  return {
-    email: ''
-  };
-}
-,methods: {
-  alertMyEmail() {
-    alert(this.email);
-  }
-}
-
-} 
-
+export default {
+  data() {
+    return {
+      email: "",
+      loggedIn: false,
+    };
+  },
+  methods: {
+    logMeIn() {
+      this.loggedIn = true;
+    },
+    logOut() {
+      this.loggedIn = false;
+      this.email = "";
+    },
+  },
+};
 </script>
 
 <style>
-
 #red {
   color: red;
 }
